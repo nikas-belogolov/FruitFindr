@@ -14,7 +14,7 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ id, onClick, sho
     const markerRef = useRef(null);
 
     useEffect(() => {
-        showPopup && markerRef.current.openPopup();
+        if (showPopup) markerRef.current.openPopup();
     }, [showPopup])
 
     return <Marker ref={markerRef} eventHandlers={{ click: () => onClick(id) }} {...props} >

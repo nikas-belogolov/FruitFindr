@@ -66,40 +66,43 @@ const MapComponent = ({ locations = [], types = [], newLocationPosition, setNewL
     //   }
 
     return (
-        <MapContainer ref={mapRef} maxBounds={[]} minZoom={2} className="h-full w-full" center={[0,0]} zoom={2} scrollWheelZoom={true} preferCanvas={true}>
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-
-            {/* ----- Markers ----- */}
-            <MarkerClusterGroup maxClusterRadius={140} showCoverageOnHover={false} disableClusteringAtZoom={6}>
-                {filteredLocations().map((location, i) => {
-                    return (
-                        <LocationMarker showPopup={activeMarkerId == location._id} onClick={(id) => setActiveMarkerId(id)} id={location._id} icon={icon} key={i} position={location.location.coordinates}>
-                            <Popup>
-                                <p>{location.type.name}</p>
-                            </Popup>
-                        </LocationMarker>
-                    )
-                })}
-            </MarkerClusterGroup>
-
-
-            <MyLocationMarker /> {/* My Location Marker */}
-
-            {/* New Location Marker */}
-            { setNewLocationPosition && newLocationPosition && <NewLocationMarker setPosition={setNewLocationPosition} position={newLocationPosition} /> }
-
-
-            {/* Controls & Overlays */}
+        <div className="h-full w-full relative">
             { types.length != 0 && <TypesFilterOverlay types={types} setFilters={setFilters} /> }
+            <MapContainer ref={mapRef} maxBounds={[]} minZoom={2} className="h-full w-full" center={[0,0]} zoom={2} scrollWheelZoom={true} preferCanvas={true}>
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
 
-            <div className="leaflet-top leaflet-left" style={{ marginTop: "73px" }}>
-                <LocateControl />
-                {document.fullscreenEnabled && <FullscreenControl />}
-            </div>
-        </MapContainer>
+                {/* ----- Markers ----- */}
+                <MarkerClusterGroup maxClusterRadius={140} showCoverageOnHover={false} disableClusteringAtZoom={6}>
+                    {filteredLocations().map((location, i) => {
+                        return (
+                            <LocationMarker showPopup={activeMarkerId == location._id} onClick={(id) => setActiveMarkerId(id)} id={location._id} icon={icon} key={i} position={location.location.coordinates}>
+                                <Popup>
+                                    <p>{location.type.name}</p>
+                                </Popup>
+                            </LocationMarker>
+                        )
+                    })}
+                </MarkerClusterGroup>
+
+
+                <MyLocationMarker /> {/* My Location Marker */}
+
+                {/* New Location Marker */}
+                { setNewLocationPosition && newLocationPosition && <NewLocationMarker setPosition={setNewLocationPosition} position={newLocationPosition} /> }
+
+
+                {/* Controls & Overlays */}
+
+                <div className="leaflet-top leaflet-left" style={{ marginTop: "73px" }}>
+                    <LocateControl />
+                    {document.fullscreenEnabled && <FullscreenControl />}
+                </div>
+            </MapContainer>
+        </div>
+        
     )
 }
 

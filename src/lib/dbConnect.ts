@@ -1,4 +1,6 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
+const mongoose = require('mongoose')
+mongoose.ObjectId.get(v => v.toString());
 
 declare global {
     var mongoose: any; // This must be a `var` and not a `let / const`
@@ -18,6 +20,7 @@ let cached = global.mongoose;
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
+
 
 async function dbConnect() {
     if (cached.conn) {

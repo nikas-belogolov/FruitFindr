@@ -1,5 +1,6 @@
 import { IType } from '@/models/Type';
 import { CSSProperties } from 'react';
+import Select from 'react-select';
 
 export default function TypesFilterOverlay({ types, setFilters }) {
 
@@ -7,31 +8,22 @@ export default function TypesFilterOverlay({ types, setFilters }) {
         top: 10,
         left: 53,
         position: "absolute",
-        zIndex: 1000
-    }
-
-    const datalistStyles: CSSProperties = {
-        position: "absolute",
-        backgroundColor: "white",
-        width: "100%"
+        zIndex: 10000,
+        minWidth: "200px"
     }
 
     return (
         <div style={overlayStyles}>
-            <select className="form-select" name="" id="" onChange={(e) => setFilters(e.target.value)}>
-                {types.map((type, key) => {
-                    return <option key={key} value={type.name}>{type.name}</option>
-                })}
-            </select>
-            {/* <div style={datalistStyles}>
-                {types.map((type, key) => {
-                    return (
-                        <div key={key}>
-                            {type.name}
-                        </div>
-                    )
-                })}
-            </div> */}
+            <Select
+                isMulti
+                onChange={(e: any) => setFilters(e.map(e => e.label))}
+                name="color"
+                placeholder="Filters..."
+                options={types.map(type => ({
+                    value: type.name,
+                    label: type.name
+                }))}
+            />
         </div>
     )
 }

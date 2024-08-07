@@ -22,7 +22,10 @@ export default async function page() {
     const types = await getLocationTypes();
 
     return (
-        <NewLocation types={types} />
+        <NewLocation types={types.map(doc => ({
+            ...doc,
+            _id: doc._id.toString(),
+          }))} />
     )
     
 }

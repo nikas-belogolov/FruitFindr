@@ -20,7 +20,8 @@ export default async function Map() {
   const types: any = await getLocationTypes();
 
   return (
-        <LazyMap types={types.map(doc => ({
+        <LazyMap 
+        types={types.map(doc => ({
           ...doc,
           _id: doc._id.toString(),
         }))}
